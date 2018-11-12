@@ -1,0 +1,46 @@
+body{
+  display: flex;
+  font-family: 'KoHo', sans-serif;
+  background-color: #deecfc;
+  justify-content: center;
+  flex-direction: column;
+  }
+
+#pause-btn{
+  font-family: 'KoHo', sans-serif;
+  background-color: #b9ceeb;  
+  font-size: 50px;
+  padding: 10px 10px;
+  border: none;
+  margin: auto;
+  color: inherit;
+  width: 500px;
+  border-radius: 30px;
+  align-content: center;
+
+}
+
+div{
+  text-align: center;
+  margin-bottom: 3px;
+}
+
+
+#timer{
+  font-family: 'KoHo', sans-serif;  
+  font-size: 80px;
+  align-content: center;
+}
+
+#reset-btn{
+  font-family: 'KoHo', sans-serif;
+  background-color: #87a8d0;  
+  font-size: 20px;
+  padding: 5px 5px;
+  border: none;
+  margin: auto;
+  color: inherit;
+  width: 70px;
+  border-radius: 15px;
+  align-content: center;
+}

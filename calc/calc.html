@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			function ParseValue(tex) {
+				let ret = [];
+				let last_ch = 'null';
+				for(let i = 0; i < tex.length; i++) {
+					let ch = tex.charAt(i)
+					if (!isNaN(parseInt(ch))) { // tex[i] is integer
+						if (last_ch == 'int') {
+							ret[ret.length-1]+=ch;
+						} else {
+							ret.push(ch);
+						}
+						last_ch = 'int';
+					} else { // tex[i] is operator
+						if(!['+','-','*','/','.'].includes(ch)) {
+							console.log("input error!");	
+							last_ch = 'error';
+						} else if (ch=='.') {
+							console.log("decimal point");
+							if (last_ch == 'int') {
+								ret[ret.length-1]+=ch;
+								last_ch = 'int';
+							} else {
+								console.log("input error!");
+								last_ch = 'error';
+							}
+						} else {
+							ret.push(ch);
+							last_ch = 'operator';
+						}
+					}
+					console.log(ret);
+				}
+				return ret;
+			}	
+			function Calculate(arr) {
+				narr = [];
+				for(i = 0; i < arr.length; i++) {
+					if(arr[i] == '*') {
+						narr[narr.length-1] = narr[narr.length-1]*parseFloat(arr[i+1]);
+						i++;
+					} else if (arr[i] == '/') {
+						narr[narr.length-1] = narr[narr.length-1]/parseFloat(arr[i+1]);
+						i++;
+					} else {
+						if(!isNaN(parseFloat(arr[i]))) {
+							narr.push(parseFloat(arr[i]));
+						} else {
+							narr.push(arr[i]);
+						}
+					}
+					console.log(narr);
+				}
+				arr = narr;
+				narr = [];
+				for(i = 0; i < arr.length; i++) {
+					if(arr[i] == '+') {
+						narr[narr.length-1] = narr[narr.length-1]+parseFloat(arr[i+1]);
+						i++;
+					} else if (arr[i] == '-') {
+						narr[narr.length-1] = narr[narr.length-1]-parseFloat(arr[i+1]);
+						i++;
+					} else {
+						if(!isNaN(parseFloat(arr[i]))) {
+							narr.push(parseFloat(arr[i]));
+						} else {
+							narr.push(arr[i]);
+						}
+					}
+					console.log(narr);
+				}
+				arr = narr;
+				return arr[0];
+			}
+			function CalcButton(val) {
+				document.getElementById("textField").value += val;
+			}
+			function ParseCalculate() {
+				console.log("hello world!");
+				val = ParseValue(document.getElementById("textField").value);
+				console.log(val);
+				ret = Calculate(val);
+				document.getElementById("textField").value = ret;
+			}
+			function CalcClear() {
+				document.getElementById("textField").value = '';
+			}
+			function CalcDel() {
+				let str = document.getElementById("textField").value;
+				document.getElementById("textField").value = str.slice(0,str.length-1);
+			}
+		</script>
+	</head>
+	<body>
+		<div style="width:256px">
+			<table style="width:100%;height:100%">
+				<tr>
+					<td colspan="4"><input style="width:100%;height:100%" id="textField" type="text"/></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input id="calcClear" style="width:100%;height:100%" type="button" value="C" onclick="CalcClear();"/></td>
+					<td><input id="delbtn" style="width:100%;height:100%" type="button" value="ก็" onclick="CalcDel();"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="/" onclick="CalcButton(this.value);"/></td>
+				<tr>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="7" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="8" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="9" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="*" onclick="CalcButton(this.value);"/></td>
+				</tr>
+				<tr>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="4" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="5" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="6" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="-" onclick="CalcButton(this.value);"/></td>
+				</tr>
+				<tr>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="1" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="2" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="3" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="*" onclick="CalcButton(this.value);"/></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input id="inbtn" style="width:100%;height:100%" type="button" value="0" onclick="CalcButton(this.value);"/></td>
+					<td><input id="inbtn" style="width:100%;height:100%" type="button" value="." onclick="CalcButton(this.value);"/></td>
+					<td><input id="calcButton" style="width:100%;height:100%" type="button" value="=" onclick="ParseCalculate();"/></td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>

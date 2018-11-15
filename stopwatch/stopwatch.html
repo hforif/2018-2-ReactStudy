@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<script>
+		class StopWatch {
+			constructor() {
+				this.num = 0
+				this.view = "00:00:00"
+				this.intervalRef = null
+
+				this.start = this.start.bind(this)
+				this.pause = this.pause.bind(this)
+				this.stop = this.stop.bind(this)
+				this.update = this.update.bind(this)
+				this.log = this.log.bind(this)
+			}
+			log() {
+				document.getElementById("list").innerHTML += "<li>"+this.view+"</li>"
+			}
+			update() {
+				console.log(this.num)
+				this.num += 1
+				this.view = ('00'+Math.floor(this.num/6000)).slice(-2)+":"+('00'+Math.floor((this.num/100)%60)).slice(-2)+":"+('00'+this.num%100).slice(-2)
+				document.getElementById("view").innerHTML = "<p>"+this.view+"</p>"
+			}
+			start() {
+				this.intervalRef = setInterval(this.update, 10)
+			}
+			pause() {
+				clearInterval(this.intervalRef)
+			}
+			stop() {
+				this.num = -1
+				this.update()
+				this.pause()
+				document.getElementById("list").innerHTML=""
+			}
+		}
+		let sWat = new StopWatch()
+		function init() {
+			document.getElementById("start").addEventListener("click",sWat.start)
+			document.getElementById("stop").addEventListener("click",sWat.stop)
+			document.getElementById("pause").addEventListener("click",sWat.pause)
+			document.getElementById("view").innerHTML = "<p>"+sWat.view+"</p>"
+			document.getElementById("log").addEventListener("click",sWat.log)
+		}
+	</script>
+	</head>
+	<body onload="init()">
+		<div id="view"></div>
+		<button id="start">START</button>
+		<button id="pause">PAUSE</button>
+		<button id="stop">STOP</button>
+		<button id="log">LOG</button>
+		<div><ul id="list"></ul>
+	</body>
+</html>
+
+

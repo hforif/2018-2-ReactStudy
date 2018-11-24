@@ -33,13 +33,34 @@ const list = [
 ]
 
 class App extends Component {
+  state = {
+    time: 0,
+    count: [1,2,3,4,5]
+  }
+  
+  componentWillMount(){
+    setInterval(()=>{
+      this.setState({
+        time: new Date() +"",
+      })
+
+      this.setState({
+       
+      })
+    }, 1000)
+  }
+
   render() {
-    return (
-      <div className="App">
-        <Location pic1 = {list[0].pic1} name={list[0].name} address={list[0].address} description={list[0].description} />
-        <Location/>
-        <Location/>
-        <Location/>
+    return ( 
+       <div className="App">
+       {(this.state.time) ? this.state.time : "Now loading...." }
+      
+      {
+        list.map( (element, index)=>{
+          return(
+            <Location pic1 = {element.pic1} name={element.name} address={element.address} description={element.description} />      
+          )
+      } )}
 
       </div>
     );

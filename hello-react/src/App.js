@@ -20,8 +20,7 @@ class App extends Component {
           {
             title: "Matrix",
             poster: "https://images-na.ssl-images-amazon.com/images/I/51EG732BV3L._SY445_.jpg"
-        
-        
+      
           },
         
           {
@@ -38,16 +37,16 @@ class App extends Component {
   }
 
   _renderMovies = () => {
-    this.state.movies.map((movie, index)=> {
+    const movies = this.state.movies.map((movie, index)=> {
       return <Movie title={movie.title} poster={movie.poster} key={index}/>
     })    
+   return movies 
   }
 
   render() {
     return (
       <div className="App">
-        Loading
-                    
+        {this.state.movies ? this._renderMovies() : 'Loading'}            
       </div>
     )
   }

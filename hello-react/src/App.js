@@ -2,33 +2,55 @@ import React, { Component } from 'react';
 import './App.css';
 import Movie from './Movie'
 
-const movies = [
-  {
-    title : "해리포터",
-    poster : "https://jjhsscholar.files.wordpress.com/2017/07/kakaotalk_20170802_233656442.jpg"
-  },
-  {
-    title : "반지의 제왕",
-    poster : "http://extmovie.maxmovie.com/xe/files/attach/images/1113733/958/264/003/63d6fc64785724e3e508c95fba8c8b0e.jpg"
-  },
-  {
-    title : "호빗",
-    poster : "http://ojsfile.ohmynews.com/STD_IMG_FILE/2014/1221/IE001784617_STD.jpg"
-  },
-  {
-    title : "왕좌의 게임",
-    poster : "http://www.joongboo.com/news/photo/201609/1105385_1014162_2531.jpg"
-  }
-]
-
 class App extends Component {
+  // Render : componentWillMount()(api request) -> render() -> componentDidMount()
+  // Update : componentWillReceiveProps() -> shouldComponentUpdate()  == true
+  // -> componentWillUpdate() -> render() -> component
+  
+  // 컴포넌트의 state가 바뀔때마다 render함.
+  state = {
+  }
+  componentDidMount(){
+    /*setTimeout(() => {
+      this.setState({
+        greeting: "Hello again!"
+      })
+    }, 2000)*/
+    this._getMovies();
+  }
+
+  _renderMovies = () => {
+    const movies = this.state.movies.map((movie) => {
+      return <Movie 
+        title={movie.title_english} 
+        poster={movie.medium_cover_image} 
+        key={movie.id} 
+        genres={movie.genres}
+        synopsis={movie.synopsis}
+        />
+    })
+    return movies
+  }
+
+  _getMovies = async () => {
+    const movies = await this._callApi()
+    this.setState({
+      movies
+    })
+  }
+
+  _callApi = () => {
+    return fetch("https://yts.am/api/v2/list_movies.json?sort_by=rating")
+    .then(response => response.json())
+    .then(json => json.data.movies)
+    .catch(err => console.log(err))
+  }
+
   render() {
     return (
       <div className="App">
-        {movies.map((movie, index) => {
-          return <Movie title={movie.title} poster={movie.poster} key={index}/>
-        })}  
-      </div>
+        {this.state.movies ? this._renderMovies() : 'Loading'}  
+      </div>  
     );
   }
 }
